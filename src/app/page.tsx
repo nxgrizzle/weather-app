@@ -11,6 +11,7 @@ const Home = () => {
   const [current, setCurrent] = useState<number>(0);
   const [unit, setUnit] = useState<"C" | "F">("C");
   const handleSearch = (location: string) => {
+    if (location === "") return;
     setLocation(location);
   };
   const handleCurrent = (index: number) => {
@@ -26,12 +27,14 @@ const Home = () => {
       </h1>
 
       {location ? (
-        <h2>Results for {location}</h2>
+        <h2>
+          Results for <span data-testid="address">{location}</span>
+        </h2>
       ) : (
         <p className="text-white">Search for a location below:</p>
       )}
       <Search handleSearch={handleSearch} />
-      {location ? (
+      {location && location !== "" ? (
         <WeatherDetailsLoading
           weather={weather?.days[current] as Day}
           unit={unit}
@@ -43,7 +46,7 @@ const Home = () => {
         {weather
           ? Array(7)
               .fill(0)
-              .map((day, index) => {
+              .map((_, index) => {
                 const currentDay = weather.days[index];
                 return (
                   <WeatherCard

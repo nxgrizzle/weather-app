@@ -8,14 +8,15 @@ export const WeatherDetails = ({
   unit,
   handleUnit,
 }: {
-  weather: Day;
+  weather?: Day;
   unit: "C" | "F";
   handleUnit: (unit: "C" | "F") => void;
 }) => {
+  if (!weather) return <p>No weather was found at this location.</p>;
   return (
     <div className="border-2 border-white p-2 rounded-md w-full pt-4 min-h-[12rem]">
       <div className="flex flex-row justify-between items-start w-full">
-        <div className="flex flex-row items-start justify-start gap-x-3">
+        <div className="flex flex-row items-start justify-start gap-x-3 flex-wrap">
           <div className="flex flex-row gap-x-2">
             <WeatherIcon icon={weather.icon} size="h-20 w-20" />
             <p className="text-5xl font-light mt-3" data-testid="temp">

@@ -37,3 +37,28 @@ describe("can search for a city", () => {
     cy.get("[data-testid='weather-card']").should("have.length", 7);
   });
 });
+
+describe("can see search history", () => {
+  it("can see history", () => {
+    cy.visit("localhost:3000/");
+    // type in search, menu should not appear
+    cy.get("[data-testid='search']").type("93101");
+    cy.get("[data-testid='search-menu']").should("not.exist");
+    cy.get('[data-testid="button"]').click();
+    // type in search, menu should appear
+    cy.get("[data-testid='search']").type("93102");
+    cy.get("[data-testid='search-menu']").should("be.visible");
+  });
+  it("can click on history", () => {
+    cy.visit("localhost:3000/");
+    // type in search, menu should not appear
+    cy.get("[data-testid='search']").type("93101");
+    cy.get("[data-testid='search-menu']").should("not.exist");
+    cy.get('[data-testid="button"]').click();
+    // type in search, menu should appear
+    cy.get("[data-testid='search']").type("93102");
+    cy.get("[data-testid='search-menu']").should("be.visible");
+    cy.get("[data-testid='93101']").click();
+    cy.get("[data-testid='address']").contains("93101");
+  });
+});
