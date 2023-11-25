@@ -50,13 +50,6 @@ export const getData = (data: any): Details => {
 };
 
 export const displayDateOrHour = (currentDate: Date, weatherDate: string) => {
-  console.log(
-    currentDate,
-    weatherDate,
-    dayjs(currentDate).format("dddd h:00 A"),
-    dayjs(weatherDate).format("dddd h:00 A"),
-    dayjs(currentDate).isSame(weatherDate, "day")
-  );
   return dayjs(currentDate).isSame(weatherDate, "day")
     ? dayjs(currentDate).format("dddd h:00 A")
     : dayjs(weatherDate).format("dddd");

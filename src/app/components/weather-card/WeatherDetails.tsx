@@ -2,6 +2,7 @@ import React from "react";
 import { Day, celsiusToFahrenheit, displayDateOrHour } from "../../utils";
 import { WeatherIcon } from "./WeatherIcon";
 import { WeatherChart } from "./WeatherChart";
+import { withLoading } from "../hoc/withLoading";
 export const WeatherDetails = ({
   weather,
   unit,
@@ -62,3 +63,5 @@ export const WeatherDetails = ({
     </div>
   );
 };
+
+export const WeatherDetailsLoading = withLoading(WeatherDetails);

@@ -57,6 +57,11 @@ export const WeatherChart = ({
         display: false,
       },
       tooltip: {
+        borderColor: "rgba(255, 255, 255, 1)",
+        borderWidth: 2,
+        padding: 8,
+        position: "nearest",
+        intersect: false,
         backgroundColor: "rgba(0, 0,0, 1)",
         titleFontColor: "white",
         bodyFontColor: "black",

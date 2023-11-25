@@ -4,10 +4,10 @@ import { Day } from "./utils";
 import { useWeatherFetch } from "./hooks/useWeatherFetch";
 import { Search } from "./components/search/Search";
 import { WeatherCard } from "./components/weather-card/WeatherCard";
-import { WeatherDetails } from "./components/weather-card/WeatherDetails";
+import { WeatherDetailsLoading } from "./components/weather-card/WeatherDetails";
 const Home = () => {
   const [location, setLocation] = useState<string | undefined>();
-  const weather = useWeatherFetch(location);
+  const { weather, loading } = useWeatherFetch(location);
   const [current, setCurrent] = useState<number>(0);
   const [unit, setUnit] = useState<"C" | "F">("C");
   const handleSearch = (location: string) => {
@@ -31,25 +31,30 @@ const Home = () => {
         <p className="text-white">Search for a location below:</p>
       )}
       <Search handleSearch={handleSearch} />
-      {weather ? (
-        <WeatherDetails
-          weather={weather.days[current] as Day}
+      {location ? (
+        <WeatherDetailsLoading
+          weather={weather?.days[current] as Day}
           unit={unit}
           handleUnit={handleUnit}
+          loading={loading}
         />
       ) : null}
       <div className="flex flex-row gap-x-4 w-full flex-wrap gap-y-4 justify-center items-center">
         {weather
-          ? weather.days.slice(0, 7).map((day: Day, index) => {
-              return (
-                <WeatherCard
-                  key={day.date}
-                  weather={day}
-                  handleCurrent={() => handleCurrent(index)}
-                  unit={unit}
-                />
-              );
-            })
+          ? Array(7)
+              .fill(0)
+              .map((day, index) => {
+                const currentDay = weather.days[index];
+                return (
+                  <WeatherCard
+                    key={currentDay.date}
+                    weather={currentDay}
+                    handleCurrent={() => handleCurrent(index)}
+                    unit={unit}
+                    current={current === index}
+                  />
+                );
+              })
           : null}
       </div>
     </main>

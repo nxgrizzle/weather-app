@@ -6,16 +6,20 @@ export const WeatherCard = ({
   weather,
   handleCurrent,
   unit,
+  current,
 }: {
   weather: Day;
   handleCurrent: () => void;
   unit: "C" | "F";
+  current: boolean;
 }) => {
   return (
     <div
       key={weather.date}
       data-testid={"weather-card"}
-      className="border-2 border-white p-2 rounded-md flex flex-col justify-center items-center min-w-[7rem] min-h-[7rem] cursor-pointer hover:scale-105 transition-all duration-150"
+      className={`border-2 border-white p-2 rounded-md flex flex-col justify-center items-center min-w-[7rem] min-h-[7rem] cursor-pointer hover:scale-105 transition-all duration-150 ${
+        current ? "bg-gray-900" : ""
+      }`}
       onClick={handleCurrent}
     >
       <h2>{dayjs(weather.date).format("ddd")}</h2>
